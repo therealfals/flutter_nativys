@@ -165,14 +165,35 @@ class MyAccountState extends State<MyAccount> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.white,
+            centerTitle: true,
             bottom: TabBar(
+              indicatorColor: Color(0xffDEA900),
+              labelColor: Color(0xffDEA900),
+              unselectedLabelColor: Colors.grey,
               tabs: [
-                Tab(child:Text('Reservations')),
+                Tab(child:Text('Reservations' ,),),
                 Tab(child:Text('Mon compte')),
               ],
             ),
-            title: Text('Mon compte',textAlign: TextAlign.center,),
-
+            title: Text('Mon compte',style: TextStyle(color: Colors.black),),
+            leading: IconButton(
+    icon: Icon(
+    Icons.arrow_back,
+    color: Color(0xffDEA900) ,
+    ),
+    ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.settings,
+                  color: Color(0xffDEA900),
+                ),
+                onPressed: () {
+                  // do something
+                },
+              ),
+            ],
           ),
           body: TabBarView(
             children: [
@@ -209,7 +230,10 @@ class MyAccountState extends State<MyAccount> {
                      Column(
                          children:[
                            Container(
-                               child: Text('Modifier le profil',textAlign: TextAlign.left,)),
+                               child: Align(
+                                   alignment: Alignment.centerLeft,
+                                   child: Text('Modifier le profil', style: TextStyle(fontSize: 18),))),
+                           Padding(padding: EdgeInsets.all(8.0)),
                            _buildPrenom(),
                            Padding(padding: EdgeInsets.all(8.0)),
                            _buildNom(),
@@ -218,11 +242,19 @@ class MyAccountState extends State<MyAccount> {
                            _buildEmail(),
                            Padding(padding: EdgeInsets.all(8.0)),
                            _buildTelephone(),
-                           Text('Mes cartes enregistrées'),
+                           Padding(padding: EdgeInsets.all(8.0)),
+
+                           Align(
+                               alignment: Alignment.centerLeft,
+                               child: Text('Mes cartes enregistrées',style: TextStyle(fontSize: 18))),
                            Padding(padding: EdgeInsets.all(8.0)),
                            _buildTelephone(),
                            Padding(padding: EdgeInsets.all(8.0)),
-                           Text('Mot de passe'),
+                           Align(
+                               alignment: Alignment.centerLeft,
+                               child: Text('Mot de passe',style: TextStyle(fontSize: 18))),
+                           Padding(padding: EdgeInsets.all(8.0)),
+
                            _buildPassword(),
                            Padding(padding: EdgeInsets.all(8.0)),
 
@@ -261,7 +293,7 @@ class MyAccountState extends State<MyAccount> {
                                },
                                color: Colors.white,
                                shape: RoundedRectangleBorder(
-                                   borderRadius: new BorderRadius.circular(10.0),side: BorderSide(color: Colors.red)),
+                                   borderRadius: new BorderRadius.circular(10.0),side: BorderSide(color: Color(0xffDEB144))),
                                child: Text(
                                  "Deconnexion",
                                  style: TextStyle(fontSize: 16, color: Colors.black),
