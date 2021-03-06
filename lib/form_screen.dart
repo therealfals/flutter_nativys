@@ -343,7 +343,7 @@ class FormScreenRegisterState extends StatelessWidget {
 
   void register(email, password, phone, prenom, nom, password_confirm) async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
-    String _path = 'https://api.nativys.com/api/v1/login';
+    String _path = 'https://api.nativys.com/api/v1/signup-client';
 
     var params = {
       "prenom": prenom,
@@ -364,7 +364,9 @@ class FormScreenRegisterState extends StatelessWidget {
               return status <= 500;
             }),
         data: params);
+    print(params);
     print(response);
+
     if (response.statusCode == 201) {
       //  print(response.toString());
       //    var roken = response.data as String;

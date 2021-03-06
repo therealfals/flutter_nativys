@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'form_screen.dart';
 import 'home_appli.dart';
+import 'my_account.dart';
 
 void main() => runApp(MyApp());
 class MyApp extends StatelessWidget{
@@ -10,7 +11,8 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
    return MaterialApp(
      routes: {
-       '/login':(context)=>FormScreen()
+       '/login':(context)=>FormScreen(),
+       '/my-account':(context)=>MyAccount()
      },
      title: 'Coding with babs',
      theme: ThemeData(

@@ -156,7 +156,10 @@ class HomeAppliState extends State<HomeAppli> {
     selectedItemColor: Colors.amber[800],
     onTap: (index){
             switch(index){
-              case 2:
+              case 1:
+                Navigator.pushNamed(context, '/my-account');
+                break;
+                case 2:
                 Navigator.pushNamed(context, '/login');
                 break;
             }
