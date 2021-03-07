@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FormScreen extends StatefulWidget {
   @override
@@ -13,6 +14,8 @@ class FormScreen extends StatefulWidget {
 }
 
 class FormScreenState extends State<FormScreen> {
+  SharedPreferences sharedPreferences;
+
   String _name;
   String _email;
   String _password;
@@ -55,6 +58,8 @@ class FormScreenState extends State<FormScreen> {
       var r = jsonDecode(response.toString());
       // prefs.setString('token', r);
       await FlutterSession().set("token", response.toString());
+      sharedPreferences = await SharedPreferences.getInstance();
+      sharedPreferences.setString("token",response.toString());
       final snackBar = SnackBar(content: Text("Login Successful"));
       scaffoldKey.currentState.showSnackBar(snackBar);
     } else if (response.statusCode == 401) {
@@ -372,7 +377,7 @@ class FormScreenRegisterState extends StatelessWidget {
       //    var roken = response.data as String;
       var r = jsonDecode(response.toString());
       // prefs.setString('token', r);
-      await FlutterSession().set("token", response.toString());
+     // await FlutterSession().set("token", response.toString());
       final snackBar = SnackBar(content: Text("Compte créé avec succés"));
       scaffoldKey.currentState.showSnackBar(snackBar);
     } else if (response.statusCode == 401) {

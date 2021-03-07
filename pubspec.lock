@@ -114,6 +114,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.16.1"
+  jwt_decode:
+    dependency: "direct main"
+    description:
+      name: jwt_decode
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   matcher:
     dependency: transitive
     description:
@@ -192,7 +199,7 @@ packages:
     source: hosted
     version: "3.0.0"
   shared_preferences:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: shared_preferences
       url: "https://pub.dartlang.org"

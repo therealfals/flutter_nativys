@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 class FadeAnimation extends StatelessWidget {
@@ -32,22 +36,98 @@ class FadeAnimation extends StatelessWidget {
     );
   }
 }
+class Data {
+  final int id;
+  final String data;
+  Data({this.data, this.id});
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data["id"] = id;
+    data["email"] = this.data;
+    return data;
+  }
+}
 class MyAccount extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
+
+
     return MyAccountState();
   }
 }
 
 class MyAccountState extends State<MyAccount> {
-  String _nom;
+  String _nom = 'ee';
   String _prenom;
   String _email;
   String _password;
   String _telephone;
+  var test  ;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+   //var token = json.decode ( FlutterSession().get("token").toString());
+  @override
+  void initstate()  {
+    print('ryyy');
+    var token =   FlutterSession().get("token");
+    setState(() async{
+      var sharedPreferences = await SharedPreferences.getInstance();
+      test =json.decode(sharedPreferences.getString("token"));
+      print(test["data"]["user"]["id"]);
+      //test =token["data"]["user"]['email'] ;
+print('fghn');
+    });
+    print('efghj');
+    super.initState();
+  }
   Widget _buildPrenom() {
-    return TextFormField(
+   return FutureBuilder<String>(
+        future:  getDatas(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return TextFormField(
+
+              initialValue: snapshot.data,
+              decoration: InputDecoration(
+                labelText: 'Prenom',
+                border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xffDEA900))),
+              ),
+              validator: (String value) {
+                if (value.isEmpty) {
+                  return 'Le prenom est obligatoire';
+                }
+
+                return null;
+              },
+              onSaved: (String value) {
+                _prenom = value;
+              },
+            );
+            /*return Image(
+              image: AdvancedNetworkImage(
+                snapshot.data,
+                timeoutDuration: Duration(minutes: 1),
+                useDiskCache: true,
+                cacheRule: CacheRule(maxAge: const Duration(days: 7)),
+              ),
+              height: mediaQuery.size.width * 0.22,
+              width: mediaQuery.size.width * 0.22,
+            );*/
+          }
+          /*else{
+            return TextFormField(
+
+            );
+          }*/
+          return Text("eeeeeeee");
+        }
+
+    );
+
+   /* return TextFormField(
+
+      initialValue: getDatas().toString(),
       decoration: InputDecoration(
         labelText: 'Prenom',
         border: OutlineInputBorder(),
@@ -64,7 +144,7 @@ class MyAccountState extends State<MyAccount> {
       onSaved: (String value) {
         _prenom = value;
       },
-    );
+    );*/
   }
   Widget _buildNom() {
     return TextFormField(
@@ -158,6 +238,12 @@ class MyAccountState extends State<MyAccount> {
       },
     );
   }
+  Future<String> getDatas() async{
+  var sharedPreferences =  await SharedPreferences.getInstance();
+  test =   json.decode(sharedPreferences.getString("token"));
+  return  (test["data"]["user"]["id"]).toString();
+}
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -181,7 +267,18 @@ class MyAccountState extends State<MyAccount> {
     icon: Icon(
     Icons.arrow_back,
     color: Color(0xffDEA900) ,
-    ),
+    ),onPressed: () async{
+              var sharedPreferences = await SharedPreferences.getInstance();
+        var t =json.decode(sharedPreferences.getString("token"));
+        print(t["data"]["user"]["id"]);
+              var token = await FlutterSession().get("token");
+          print( test );
+             //  UserDetails userDetails = UserDetails.fromJson(jsonDecode(token["data"]));
+               //print(userDetails );
+            //   var parsedJson = json.decode(token.toString());
+
+              //  print(parsedJson );
+            },
     ),
             actions: <Widget>[
               IconButton(
@@ -207,7 +304,7 @@ class MyAccountState extends State<MyAccount> {
                     child: Column(
                         children:[
                           Text('Modifier le profil',textAlign: TextAlign.left,),
-                          _buildPrenom(),
+                          //_buildPrenom(),
                           Padding(padding: EdgeInsets.all(8.0)),
                           _buildNom(),
                           Padding(padding: EdgeInsets.all(8.0)),
@@ -311,7 +408,6 @@ class MyAccountState extends State<MyAccount> {
       ),
     );
   }
-
 
   Widget makeItem({image, title}) {
     return AspectRatio(
